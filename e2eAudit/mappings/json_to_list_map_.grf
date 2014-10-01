@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?><Graph __version="3.5.0" author="INVHYDNB33U" created="Wed Oct 01 22:54:22 IST 2014" description="JSON To List&lt;Map&gt;" guiVersion="3.4.4.P" id="1412190106318" licenseCode="Unlicensed" licenseType="Unknown" modified="Wed Oct 01 22:54:22 IST 2014" modifiedBy="INVHYDNB33U" name="JSON_To_List_Map_" preview-file="${Project_Home}/Sample.json" revision="1.0" showComponentDetails="false">
+<Global>
+<Metadata __index="0" __referenceCounter="1" __sourcePath="{}/array" _dataStructure="SINGLE_DIMENSIONAL_COLLECTION" _id="__id" _type="Input" id="02bb7532-0d30-48d2-b884-9ecbfa050f7e">
+<Record fieldDelimiter="," name="array" recordDelimiter="\n\\|\r\n\\|\r" type="delimited">
+<Field __artificialType="_id" __systemManaged="true" name="__id" type="string"/>
+<Field __index="0" __sourcePath="{}/array/SYSTEM_x005fID" containerType="SINGLE" label="SYSTEM_ID" name="SYSTEM_ID" type="string"/>
+<Field __index="1" __sourcePath="{}/array/INTERFACE_x005fID" containerType="SINGLE" label="INTERFACE_ID" name="INTERFACE_ID" type="string"/>
+<Field __index="2" __sourcePath="{}/array/JOB_x005fID" containerType="SINGLE" label="JOB_ID" name="JOB_ID" type="string"/>
+</Record>
+</Metadata>
+<Metadata __index="0" __referenceCounter="1" __sourcePath="{}/Map" _dataStructure="SINGLE_DIMENSIONAL_COLLECTION" _id="__id" _type="Output" id="faacdaaa-d1dd-4d4d-b3f4-70d1f3ff5f88">
+<Record fieldDelimiter="," name="Map" recordDelimiter="\n\\|\r\n\\|\r" type="delimited">
+<Field __artificialType="_id" __systemManaged="true" name="__id" type="string"/>
+<Field __implementationClass="java.lang.String" __index="1" __sourcePath="{}/Map/INTERFACE_x005fID" containerType="SINGLE" label="INTERFACE_ID" name="INTERFACE_ID" type="string"/>
+<Field __implementationClass="java.lang.String" __index="2" __sourcePath="{}/Map/JOB_x005fID" containerType="SINGLE" label="JOB_ID" name="JOB_ID" type="string"/>
+<Field __implementationClass="java.lang.String" __index="0" __sourcePath="{}/Map/SYSTEM_x005fID" containerType="SINGLE" label="SYSTEM_ID" name="SYSTEM_ID" type="string"/>
+</Record>
+</Metadata>
+<Dictionary>
+<Entry id="DictionaryEntry0" input="true" name="inputPayload" output="false" type="object"/>
+<Entry id="DictionaryEntry1" input="false" name="outputPayload" output="true" type="object"/>
+</Dictionary>
+</Global>
+<Phase number="0">
+<Node enabled="enabled" guiName="Foreach 'array' -&gt; 'Map'" guiX="460" guiY="20" id="FOREACH_ARRAY_MAP" transformClass="com.mulesoft.datamapper.transform.MelRecordTransform" type="REFORMAT">
+<attr name="melScript"><![CDATA[//MEL
+//START -> DO NOT REMOVE
+output.__id = input.__id;
+//END -> DO NOT REMOVE
+output.SYSTEM_ID = input.SYSTEM_ID;
+output.INTERFACE_ID = input.INTERFACE_ID;
+output.JOB_ID = input.JOB_ID;
+]]></attr>
+</Node>
+<Node charset="UTF-8" enabled="enabled" fileURL="dict:inputPayload" guiName="JSON READER" guiX="20" guiY="20" id="JSON_READER0" type="JSON_READER">
+<attr name="mapping"><![CDATA[<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<Context xpath="/root">
+  <Context outPort="0" sequenceField="__id" xpath="array">
+    <Mapping cloverField="SYSTEM_ID" trim="true" xpath="SYSTEM_x005fID"/>
+    <Mapping cloverField="INTERFACE_ID" trim="true" xpath="INTERFACE_x005fID"/>
+    <Mapping cloverField="JOB_ID" trim="true" xpath="JOB_x005fID"/>
+  </Context>
+</Context>
+]]></attr>
+<attr name="_data_format"><![CDATA[JSON]]></attr>
+<attr name="jsonSchemaURL"><![CDATA[./Sample.json]]></attr>
+</Node>
+<Node cacheInMemory="true" enabled="enabled" fileURL="dict:outputPayload" guiName="Map&lt;k,v&gt; WRITER" guiX="900" guiY="20" id="MAP_WRITER0" type="MAP_WRITER">
+<attr name="mapping"><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
+<clover:collection clover:name="Map" xmlns:clover="http://www.cloveretl.com/ns/xmlmapping">
+  <item clover:inPort="0">
+    <clover:element clover:name="SYSTEM_ID" clover:dataType="java.lang.String">$0.SYSTEM_ID</clover:element>
+    <clover:element clover:name="INTERFACE_ID" clover:dataType="java.lang.String">$0.INTERFACE_ID</clover:element>
+    <clover:element clover:name="JOB_ID" clover:dataType="java.lang.String">$0.JOB_ID</clover:element>
+  </item>
+</clover:collection>]]></attr>
+<attr name="_data_format"><![CDATA[MAP]]></attr>
+<attr name="__metadata"><![CDATA[true]]></attr>
+</Node>
+<Edge debugMode="true" fromNode="FOREACH_ARRAY_MAP:0" guiBendpoints="" id="Edge1" inPort="Port 0 (in)" metadata="faacdaaa-d1dd-4d4d-b3f4-70d1f3ff5f88" outPort="Port 0 (out)" toNode="MAP_WRITER0:0"/>
+<Edge debugMode="true" fromNode="JSON_READER0:0" guiBendpoints="" id="Edge0" inPort="Port 0 (in)" metadata="02bb7532-0d30-48d2-b884-9ecbfa050f7e" outPort="Port 0 (out)" toNode="FOREACH_ARRAY_MAP:0"/>
+</Phase>
+</Graph>
